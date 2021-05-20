@@ -75,13 +75,14 @@
                 android:layout_marginRight="10dp"
                 android:drawableLeft="@drawable/ic_reserve"
                 android:shadowColor="@color/grey"
+                android:background="@color/design_default_color_primary"
                 android:text="预约挂号" />
 
             <Button
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="100dp"
-                android:background="@drawable/button_background"
+                android:background="@color/design_default_color_primary"
                 android:drawableLeft="@drawable/ic_pay"
                 android:text="门诊缴费" />
 
@@ -102,7 +103,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/button_background"
+                android:background="@color/design_default_color_primary"
                 android:drawableLeft="@drawable/ic_report"
                 android:text="报告查询" />
 
@@ -110,7 +111,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="100dp"
-                android:background="@drawable/button_background"
+                android:background="@color/design_default_color_primary"
                 android:drawableLeft="@drawable/ic_vaccine"
                 android:text="疫苗预约" />
 
@@ -121,14 +122,19 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
-            android:text="推荐医院"
+            android:text="推荐医生"
             android:textSize="20dp"
             android:textColor="@color/black"/>
 
-        <ListView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/doctor_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </ListView>
+            android:layout_height="400dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+        </androidx.recyclerview.widget.RecyclerView>
+
 </LinearLayout>
 
 </ScrollView>
