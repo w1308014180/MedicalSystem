@@ -2,6 +2,8 @@ package com.example.medicalsystem;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.medicalsystem.Adapter.DoctorAdapter;
@@ -29,6 +32,7 @@ public class FirstFragment extends Fragment {
     private ImageView imageView;
     private List<Doctor> doctorList = new ArrayList<>();
 
+
     public static FirstFragment newInstance() {
         return new FirstFragment();
     }
@@ -37,6 +41,18 @@ public class FirstFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.first_fragment, container, false);
+        //点击地图
+        ImageView mapButton = (ImageView)view.findViewById(R.id.map_button);
+        mapButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), MapActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
+
+        //医师推荐recyclerView
         initDoctor();
         RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.doctor_recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -54,6 +70,7 @@ public class FirstFragment extends Fragment {
         //mViewModel = new ViewModelProvider(requireActivity()).get(FirstViewModel.class);切换页面不变
         mViewModel = new ViewModelProvider(this).get(FirstViewModel.class);
         // TODO: Use the ViewModel
+
     }
 
     private void initDoctor(){

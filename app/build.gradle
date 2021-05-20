@@ -38,6 +38,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     implementation 'androidx.navigation:navigation-fragment:2.2.2'
     implementation 'androidx.navigation:navigation-ui:2.2.2'
+    implementation files('libs\\BaiduLBS_Android.jar')
     testImplementation 'junit:junit:4.+'
     implementation 'de.hdodenhof:circleimageview:2.1.0'
     implementation 'androidx.cardview:cardview:1.0.0-alpha3'
