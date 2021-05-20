@@ -14,6 +14,9 @@
     <!--需降低Using system app permission权限至error以下-->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <!--读取手机状态-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
     <application
         android:allowBackup="true"
@@ -23,7 +26,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MedicalSystem">
 
-        <!-- Ak -->
+        <!-- 百度地图Ak -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="8K8gAiRuTKtc6HT48hTLtS2WL0g27Ad1"/>
@@ -37,6 +40,7 @@
             </intent-filter>
         </activity>
 
+        <!-- 百度定位服务 -->
         <service android:name="com.baidu.location.f" android:enabled="true"
             android:process=":remote">
         </service>

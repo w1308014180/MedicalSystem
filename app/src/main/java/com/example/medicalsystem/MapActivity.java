@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +22,7 @@ import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,11 +49,17 @@ public class MapActivity extends AppCompatActivity {
         //初始化
         SDKInitializer.initialize(getApplicationContext());
         initialize(getApplicationContext());
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.map_layout);
         mapView = (MapView) findViewById(R.id.bmapView);
         baiduMap = mapView.getMap();
-        //使用显示当前位置功能前 开启
+        //检查版本
+        initView();
+        checkVersion();
+        //使用显示当前位置功能前 开启地图定位图层
         baiduMap.setMyLocationEnabled(true);
+        if(!mLocationClient.isStarted()){
+            mLocationClient.start();
+        }
         positionText = (TextView) findViewById(R.id.position_text_view);
         List<String> permissionList = new ArrayList<>();
         //判断是否获得权限 若未获得则加入数组
@@ -95,6 +103,11 @@ public class MapActivity extends AppCompatActivity {
     private void requestLocation() {
         initLocation();
         mLocationClient.start();
+    }
+
+    private void initView(){
+        mapView = (MapView) findViewById(R.id.bmapView);
+        baiduMap = mapView.getMap();
     }
 
 
@@ -178,4 +191,27 @@ public class MapActivity extends AppCompatActivity {
 
     }
 
+    //检查版本
+    private void checkVersion() {
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
+            RxPermissions rxPermissions = new RxPermissions(this);
+            rxPermissions.request(Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.READ_PHONE_STATE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    .subscribe(granted -> {
+                        if (granted) {//申请成功
+                            //发起连续定位请求
+                            initLocation();// 定位初始化
+                        } else {//申请失败
+                            Toast.makeText(MapActivity.this,"权限未开启",Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }else {
+            initLocation();// 定位初始化
+        }
+    }
+
 }
+
+

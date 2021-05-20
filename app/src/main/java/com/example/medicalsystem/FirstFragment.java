@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,7 @@ import com.example.medicalsystem.Adapter.DoctorAdapter;
 import com.example.medicalsystem.Adapter.NewsAdapter;
 import com.example.medicalsystem.Bean.Doctor;
 import com.example.medicalsystem.Bean.News;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,6 +74,9 @@ public class FirstFragment extends Fragment {
         // TODO: Use the ViewModel
 
     }
+
+
+
 
     private void initDoctor(){
         for(int i=0; i<5; i++){
