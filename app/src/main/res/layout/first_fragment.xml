@@ -105,7 +105,7 @@
                 android:layout_marginRight="10dp"
                 android:background="@color/design_default_color_primary"
                 android:drawableLeft="@drawable/ic_report"
-                android:text="报告查询" />
+                android:text="检查报告" />
 
             <Button
                 android:layout_width="0dp"
