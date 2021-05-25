@@ -1,5 +1,7 @@
 package com.example.medicalsystem.Bean;
 
+import android.widget.EditText;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -31,6 +33,7 @@ public class News {
         this.time = time;
         this.content = content;
     }
+
 
     public int getSourceId() {
         return sourceId;

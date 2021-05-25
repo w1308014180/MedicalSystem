@@ -51,9 +51,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         News news = allNews.get(position);
         holder.newsTitle.setText(news.getTitle());
         holder.newsSource.setText(news.getSource());
-        holder.newsTime.setText(news.getTime());
         holder.newsDelete.setOnClickListener(null);
         int deleteId = news.getId();
+        holder.newsTime.setText(news.getTime());
 
         //用户可以删除自己编写的news
         if(news.getSourceId()!=1){

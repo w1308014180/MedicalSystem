@@ -65,8 +65,10 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
 
-
     // optional - Test helpers
     testImplementation "androidx.room:room-testing:$room_version"
+
+    //ToastUtils好用的Toast
+    implementation 'com.github.getActivity:ToastUtils:9.2'
 
 }

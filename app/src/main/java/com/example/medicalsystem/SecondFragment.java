@@ -87,7 +87,7 @@ public class SecondFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(getActivity(), EditNews.class);
+                intent.setClass(getActivity(), EditNewsActivity.class);
                 getActivity().startActivity(intent);
             }
         });

@@ -11,6 +11,7 @@ import android.os.Message;
 
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -23,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bigkoo.pickerview.adapter.ArrayWheelAdapter;
@@ -66,6 +68,9 @@ public class ReservationActivity extends AppCompatActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reservation_layout);
+        //启动返回按钮
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         initView();
     }
 
@@ -232,5 +237,16 @@ public class ReservationActivity extends AppCompatActivity implements View.OnCli
                 }
                 break;
         }
+    }
+
+    //监听返回事件
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return true;
     }
 }

@@ -76,16 +76,20 @@
                 android:layout_marginRight="10dp"
                 android:drawableLeft="@drawable/ic_reserve"
                 android:shadowColor="@color/grey"
-                android:background="@color/design_default_color_primary"
-                android:text="预约挂号" />
+                android:background="@color/purple_2"
+                android:text="预约挂号"
+                android:textSize="18sp"
+                android:textColor="@color/white"/>
 
             <Button
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="100dp"
-                android:background="@color/design_default_color_primary"
-                android:drawableLeft="@drawable/ic_pay"
-                android:text="门诊缴费" />
+                android:background="@color/purple_2"
+                android:drawableLeft="@drawable/ic_report"
+                android:text="检查报告"
+                android:textSize="18sp"
+                android:textColor="@color/white"/>
 
         </LinearLayout>
 
@@ -104,17 +108,21 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_marginRight="10dp"
-                android:background="@color/design_default_color_primary"
-                android:drawableLeft="@drawable/ic_report"
-                android:text="检查报告" />
+                android:background="@color/purple_2"
+                android:drawableLeft="@drawable/ic_pay"
+                android:text="预约缴费"
+                android:textSize="18sp"
+                android:textColor="@color/white"/>
 
             <Button
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="100dp"
-                android:background="@color/design_default_color_primary"
+                android:background="@color/purple_2"
                 android:drawableLeft="@drawable/ic_vaccine"
-                android:text="疫苗预约" />
+                android:text="疫苗预约"
+                android:textSize="18sp"
+                android:textColor="@color/white"/>
 
         </LinearLayout>
 

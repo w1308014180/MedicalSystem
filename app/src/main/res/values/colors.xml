@@ -8,4 +8,17 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#808080</color><!--灰色 -->
+
+    <color name="blue_200">#80DEEA</color>
+    <color name="blue_500">#00BCD4</color>
+    <color name="blue_700">#0097A7</color>
+
+    <color name="purple_2">#7579e7</color>
+    <color name="purple_3">#878ecd</color>
+    <color name="purple_1">#a3d8f4</color>
+
+    <color name="red">#ffc7c7</color>
+    <color name="pink">#fcbad3</color>
+    <color name="blue">#a3d8f4</color>
+
 </resources>

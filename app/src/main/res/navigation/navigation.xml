@@ -13,7 +13,7 @@
     <fragment
         android:id="@+id/SecondFragment"
         android:name="com.example.medicalsystem.SecondFragment"
-        android:label="资讯"
+        android:label="发现"
         tools:layout="@layout/second_fragment" />
     <fragment
         android:id="@+id/ThirdFragment"

@@ -25,20 +25,31 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MedicalSystem">
-        <activity android:name=".EditNews"></activity>
-        <activity android:name=".ReservationActivity" /> <!-- 百度地图Ak -->
+
+        <activity android:name=".RegisterActivity">
+        </activity>
+
+        <activity android:name=".LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".EditNewsActivity"
+            android:label="编辑你的分享" />
+        <activity
+            android:name=".ReservationActivity"
+            android:label="挂号预约" /> <!-- 百度地图Ak -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="8K8gAiRuTKtc6HT48hTLtS2WL0g27Ad1" />
 
-        <activity android:name=".MapActivity" />
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity> <!-- 百度定位服务 -->
+        <activity
+            android:name=".MapActivity"
+            android:label="导航" />
+        <activity android:name=".MainActivity"></activity> <!-- 百度定位服务 -->
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
