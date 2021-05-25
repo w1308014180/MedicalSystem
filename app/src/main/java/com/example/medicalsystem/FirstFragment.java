@@ -54,7 +54,18 @@ public class FirstFragment extends Fragment {
             }
         });
 
-        //医师推荐recyclerView
+        //点击预约挂号
+        Button button = (Button)view.findViewById(R.id.reserve);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), ReservationActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
+
+        //医生推荐recyclerView
         initDoctor();
         RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.doctor_recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());

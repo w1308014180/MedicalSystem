@@ -23,7 +23,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/map_button"
+            android:id="@+id/news_insert"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="right"

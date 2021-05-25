@@ -3,20 +3,20 @@
     package="com.example.medicalsystem">
     <!-- if you want to load images from the internet -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <!--需降低Using system app permission权限至error以下-->
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <!--读取手机状态-->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 需降低Using system app permission权限至error以下 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 读取手机状态 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 访问网络，用于SDK鉴权、算路导航 -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 获取网络状态，避免产生不必要的网络请求 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 获取Wi-Fi状态，避免产生不必要的网络请求 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 用于ugc事件上报拍照录像 -->
+    <uses-permission android:name="android.permission.CAMERA" /> <!-- 用于ugc事件上报录音 -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:allowBackup="true"
@@ -25,25 +25,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MedicalSystem">
-
-        <!-- 百度地图Ak -->
+        <activity android:name=".EditNews"></activity>
+        <activity android:name=".ReservationActivity" /> <!-- 百度地图Ak -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="8K8gAiRuTKtc6HT48hTLtS2WL0g27Ad1"/>
+            android:value="8K8gAiRuTKtc6HT48hTLtS2WL0g27Ad1" />
 
-        <activity android:name=".MapActivity"></activity>
+        <activity android:name=".MapActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- 百度定位服务 -->
-        <service android:name="com.baidu.location.f" android:enabled="true"
-            android:process=":remote">
-        </service>
+        </activity> <!-- 百度定位服务 -->
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" />
     </application>
 
 </manifest>
