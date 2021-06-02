@@ -59,17 +59,6 @@ public class SecondFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.second_fragment, container, false);
 
-        /*使用Toolbar
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        AppCompatActivity context = (AppCompatActivity)getActivity();
-        context.setSupportActionBar(toolbar);
-        context.getSupportActionBar().setTitle("");
-        if(context.getSupportActionBar() != null){
-            context.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            context.getSupportActionBar().setHomeButtonEnabled(true);
-        }
-        setHasOptionsMenu(true);*/
-
 
         //LinearLayoutManager是用来做列表布局，也就是单列的列表
         RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.recycler_view);

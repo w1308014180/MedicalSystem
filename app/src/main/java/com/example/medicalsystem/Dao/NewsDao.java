@@ -23,6 +23,7 @@ public interface NewsDao {
     @Delete
     void deleteNews(News... news);
 
+
     @Query("SELECT * FROM NEWS ORDER BY ID DESC")
     LiveData<List<News>>getAllNewsLive();
 

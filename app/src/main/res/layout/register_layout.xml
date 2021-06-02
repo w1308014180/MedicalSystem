@@ -107,7 +107,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/purple_3"
-        android:text="用户协议"
+        android:text="请同意用户协议"
         android:layout_gravity="left"
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"

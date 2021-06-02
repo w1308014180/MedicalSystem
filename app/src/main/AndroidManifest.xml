@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.medicalsystem">
     <!-- if you want to load images from the internet -->
+
+    <uses-feature android:name="android.hardware.camera" android:required="true" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -26,22 +28,29 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MedicalSystem">
 
-        <activity android:name=".RegisterActivity">
+        <activity
+            android:name=".UserProfileActivity"
+            android:label="个人资料"
+           ></activity>
+
+        <activity android:name=".EditProfileActivity"
+            android:label="修改资料"></activity>
+
+        <activity android:name=".RegisterActivity"
+            android:label="注册">
         </activity>
 
         <activity android:name=".LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <activity
             android:name=".EditNewsActivity"
             android:label="编辑你的分享" />
+
         <activity
             android:name=".ReservationActivity"
             android:label="挂号预约" /> <!-- 百度地图Ak -->
+
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="8K8gAiRuTKtc6HT48hTLtS2WL0g27Ad1" />
@@ -49,11 +58,32 @@
         <activity
             android:name=".MapActivity"
             android:label="导航" />
-        <activity android:name=".MainActivity"></activity> <!-- 百度定位服务 -->
+
+        <activity android:name=".MainActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter></activity>
+
+        <!-- 百度定位服务 -->
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote" />
+
+        <!-- 照相-->
+        <provider
+            android:authorities="com.example.medicalsystem.fileprovider"
+            android:name="androidx.core.content.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            >
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/files" />
+        </provider>
+
     </application>
 
 </manifest>

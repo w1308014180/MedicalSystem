@@ -1,33 +1,46 @@
 package com.example.medicalsystem;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProviders;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
+
+import com.example.medicalsystem.Bean.User;
+import com.example.medicalsystem.DataBase.UserDatabase;
+import com.example.medicalsystem.DatabaseHelper.UserDatabaseHelper;
+
+import com.example.medicalsystem.Service.UserService;
 import com.hjq.toast.ToastUtils;
 import com.hjq.toast.style.WhiteToastStyle;
 
+import java.util.List;
+
 public class LoginActivity extends AppCompatActivity {
 
-    private Button buttonLogin;
+    public static final int REQUEST_CODE_REGISTER = 1;
+    private Button buttonLogin, register;
     private EditText loginAccount, loginPassword;
-    private CheckBox cbRemember;
-
-    private String username = "juniper";
-    private String pass = "123";
+    private CheckBox cbRemember, cbAutoLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,64 +53,77 @@ public class LoginActivity extends AppCompatActivity {
         //初始化控件
         initView();
 
+        //跳转登录页
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toRegister(v);
+            }
+        });
+
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String account = loginAccount.getText().toString().trim();
                 String password = loginPassword.getText().toString().trim();
+                //吐司
                 ToastUtils.init(getApplication());
 
-                //判断同户名
-                if(TextUtils.equals(username,account)){
-                    if(TextUtils.equals(password,pass)){
-                        ToastUtils.show("登录成功");
-                        //勾选记住密码
-                        if(cbRemember.isChecked()){
-                            SharedPreferences spf = getSharedPreferences("spfRecord",MODE_PRIVATE);
-                            SharedPreferences.Editor edit = spf.edit();
-                            //存储 用户名、密码、记住密码勾选状态
-                            edit.putString("account",account);
-                            edit.putString("password",password);
-                            edit.putBoolean("isRemember", true);
-                            //先写入内存 空闲时写入磁盘
-                            edit.apply();
-                        }else{
-                            SharedPreferences spf = getSharedPreferences("spfRecord",MODE_PRIVATE);
-                            SharedPreferences.Editor edit = spf.edit();
-                            edit.putBoolean("isRemember", false);
-                            edit.apply();
-                        }
+                Log.d(TAG, "onClick: -------------" + account);
 
-                        //将用户名传入ThirdFragment
-                        Bundle bundle = new Bundle();
-                        bundle.putString("account",account);
-                        Log.d(TAG,"Login---------"+account);
-                        ThirdFragment fragment = new ThirdFragment();
-                        fragment.setArguments(bundle);
+                Log.i("TAG",account+"_"+password);
+                UserService uService=new UserService(LoginActivity.this);
+                boolean flag=uService.login(account, password);
 
-                        //跳转到MainActivity
-                        Intent intentMain = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intentMain);
-
-                        //退出
-                        LoginActivity.this.finish();
-
-                    }else{
-                        ToastUtils.show("密码错误");
-                    }
+                if(flag){
+                    Log.i("TAG","登录成功");
+                    Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
+                    startActivity(intent);
                 }else{
-                    ToastUtils.show("用户名错误");
+                    Log.i("TAG","登录失败");
+                    Toast.makeText(LoginActivity.this, "登录失败", Toast.LENGTH_LONG).show();
                 }
+
+
             }
         });
-    }
+
+
+    cbAutoLogin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            if (isChecked) {
+                cbRemember.setChecked(true);
+            }
+        }
+    });
+
+    cbRemember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            if (!isChecked) {
+                cbAutoLogin.setChecked(false);
+            }
+        }
+    });
+
+}
 
     private void initView(){
         buttonLogin = (Button)findViewById(R.id.btn_login);
         loginAccount = (EditText)findViewById(R.id.login_account);
         loginPassword = (EditText)findViewById(R.id.login_password);
         cbRemember = (CheckBox)findViewById(R.id.cb_remember);
+        cbAutoLogin = (CheckBox)findViewById(R.id.cb_auto_login);
+        register = (Button)findViewById(R.id.to_register);
+    }
 
+
+    public void toRegister(View view) {
+        Intent intent = new Intent(this, RegisterActivity.class);
+
+        startActivityForResult(intent, REQUEST_CODE_REGISTER);
     }
 
 

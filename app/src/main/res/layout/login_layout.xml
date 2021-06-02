@@ -78,8 +78,7 @@
             android:text="记住密码"/>
 
         <CheckBox
-            android:id="@+id/cb_login"
-            android:visibility="invisible"
+            android:id="@+id/cb_auto_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="自动登录"/>
@@ -98,14 +97,18 @@
         android:textColor="@color/white"
         android:background="@drawable/btn_bg_selector"/>
 
-    <TextView
+    <Button
+        android:id="@+id/to_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/purple_3"
         android:text="还没有账号？"
         android:layout_gravity="right"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="20dp"/>
+        android:layout_marginRight="20dp"
+        android:background="@null"
+        />
+
 
 
 </LinearLayout>
