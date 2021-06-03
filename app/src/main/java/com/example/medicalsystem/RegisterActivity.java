@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -16,18 +17,26 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.example.medicalsystem.Bean.LoginMessage;
+import com.example.medicalsystem.Bean.RegisterMessage;
 import com.example.medicalsystem.Bean.User;
 import com.example.medicalsystem.DataBase.UserDatabase;
 import com.example.medicalsystem.DatabaseHelper.UserDatabaseHelper;
 import com.example.medicalsystem.Service.UserService;
+import com.google.gson.Gson;
 import com.hjq.toast.ToastUtils;
 import com.hjq.toast.style.WhiteToastStyle;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class RegisterActivity extends AppCompatActivity {
 
     private Button registerButton;
     private EditText registerAccount, registerPassword, registerPasswordConfirm;
     private CheckBox rgAgree;
+    String username,password,passwordConfirm;
 
 
     @Override
@@ -43,9 +52,9 @@ public class RegisterActivity extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username = registerAccount.getText().toString();
-                String password = registerPassword.getText().toString();
-                String passwordConfirm = registerPasswordConfirm.getText().toString();
+                username = registerAccount.getText().toString();
+                password = registerPassword.getText().toString();
+                passwordConfirm = registerPasswordConfirm.getText().toString();
                 ToastUtils.init(getApplication());
                 ToastUtils.setStyle(new WhiteToastStyle());
 
@@ -70,13 +79,14 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
+                //发送网络请求是否注册成功
+                sendRequestWithOkHttp();
 
-
-                UserService uService=new UserService(RegisterActivity.this);
+              /*  UserService uService=new UserService(RegisterActivity.this);
                 User user = new User();
                 user.setUsername(username);
                 user.setUserpwd(password);
-                uService.register(user);
+                uService.register(user);*/
 
                /* Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                 startActivity(intent);*/
@@ -92,5 +102,38 @@ public class RegisterActivity extends AppCompatActivity {
         registerPassword = (EditText) findViewById(R.id.register_password);
         registerPasswordConfirm = (EditText) findViewById(R.id.register_password_confirm);
         rgAgree = (CheckBox) findViewById(R.id.cb_agree);
+    }
+
+    private void sendRequestWithOkHttp(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    OkHttpClient client = new OkHttpClient();
+                    Request request = new Request.Builder()
+                            //访问服务器地址
+                            .url("http://81.71.137.16:8000/api/v2/user/register?username="+username+"&password="+password)
+                            .build();
+                    Response response = client.newCall(request).execute();
+                    String responseData = response.body().string();
+                    parseJSONWithGSON(responseData);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    private void parseJSONWithGSON(String jsonData){
+        Gson gson = new Gson();
+        RegisterMessage registerMessage = gson.fromJson(jsonData, RegisterMessage.class);
+        Log.d("Register:code",registerMessage.getCode());
+        Log.d("Register:msg",registerMessage.getMsg());
+        Log.d("Register:data",registerMessage.getData());
+        if(TextUtils.equals(registerMessage.getCode(),"200")){
+            ToastUtils.show("注册成功");
+        }else{
+            ToastUtils.show("已有该账号注册失败");
+        }
     }
 }

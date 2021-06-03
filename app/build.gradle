@@ -71,4 +71,10 @@ dependencies {
     //ToastUtils好用的Toast
     implementation 'com.github.getActivity:ToastUtils:9.2'
 
+    //gson
+    implementation 'com.google.code.gson:gson:2.8.5'
+
+    //http
+    implementation 'com.squareup.okhttp3:okhttp:4.9.0'
+
 }

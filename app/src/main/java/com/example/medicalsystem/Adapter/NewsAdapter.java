@@ -52,6 +52,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         holder.newsTitle.setText(news.getTitle());
         holder.newsSource.setText(news.getSource());
         holder.newsDelete.setOnClickListener(null);
+        holder.newsContent.setText(news.getContent());
         int deleteId = news.getId();
         holder.newsTime.setText(news.getTime());
 
@@ -67,7 +68,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
             @Override
             public void onClick(View v) {
-                News news = new News("健康小贴士","好医生",2,"5.24","六味地黄丸");
+                News news = new News("健康小贴士","好医生",2,"5.24","多喝热水");
                 news.setId(deleteId);
                 newsViewModel.deleteNews(news);
             }
@@ -81,7 +82,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
     }
 
     class NewsViewHolder extends RecyclerView.ViewHolder{
-        TextView newsTitle, newsSource, newsTime;
+        TextView newsTitle, newsSource, newsTime, newsContent;
         Button newsDelete;
         public NewsViewHolder(@NonNull View itemView){
             super((itemView));
@@ -89,6 +90,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             newsSource = itemView.findViewById(R.id.source);
             newsTime = itemView.findViewById(R.id.time);
             newsDelete = itemView.findViewById(R.id.news_delete);
+            newsContent = itemView.findViewById(R.id.tv_news_content);
         }
     }
 

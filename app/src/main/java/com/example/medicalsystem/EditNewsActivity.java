@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.app.ActionBar;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -21,9 +22,11 @@ import java.util.List;
 
 public class EditNewsActivity extends AppCompatActivity {
 
-    EditText editNewsTitle, editNewsSource, editNewsContent;
+    private static final String TAG = "EditNewsActivity";
+    EditText editNewsTitle, editNewsContent;
     Button newsSubmit;
     NewsViewModel newsViewModel;
+    String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,14 +34,15 @@ public class EditNewsActivity extends AppCompatActivity {
 
         setContentView(R.layout.edit_news_layout);
         //获取各组件
-        newsSubmit = (Button)findViewById(R.id.submit_news);
-        editNewsTitle = (EditText) findViewById(R.id.edit_news_title);
-        editNewsSource = (EditText) findViewById(R.id.edit_news_source);
-        editNewsContent = (EditText)findViewById(R.id.edit_news_content);
+        initView();
         newsViewModel = ViewModelProviders.of(this).get(NewsViewModel.class);
 
         //启动返回按钮
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //获取用户名
+        username = getIntent().getStringExtra("Username");
+
 
         newsSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,7 +51,7 @@ public class EditNewsActivity extends AppCompatActivity {
                 Date curDate =  new Date(System.currentTimeMillis());
                 String str = formatter.format(curDate);
                 News newNews = new News(editNewsTitle.getText().toString().trim()
-                        , editNewsSource.getText().toString().trim()
+                        , username
                         , 2
                         , str
                         ,editNewsContent.getText().toString().trim());
@@ -70,4 +74,11 @@ public class EditNewsActivity extends AppCompatActivity {
         return true;
     }
 
+    private void initView(){
+        //获取各组件
+        newsSubmit = (Button)findViewById(R.id.submit_news);
+        editNewsTitle = (EditText) findViewById(R.id.edit_news_title);
+        //editNewsSource = (EditText) findViewById(R.id.edit_news_source);
+        editNewsContent = (EditText)findViewById(R.id.edit_news_content);
+    }
 }

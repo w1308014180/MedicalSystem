@@ -16,6 +16,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
+    String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +28,8 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.fragment);
         //底部工具条的配置
         AppBarConfiguration configuration = new AppBarConfiguration.Builder(bottomNavigationView.getMenu()).build();
-       /* //将用户名传入ThirdFragment
+
+        //将用户名传入ThirdFragment
         NavGraph graph = navController.getGraph();
         Bundle bundle = new Bundle();
         bundle.putString("account",account);
@@ -35,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
                 .Builder()
                 .setDefaultValue(bundle)
                 .build();
-        graph.addArgument("account", argument);*/
+        graph.addArgument("account", argument);
 
         NavigationUI.setupActionBarWithNavController(this, navController, configuration);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);

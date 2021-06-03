@@ -33,6 +33,9 @@ public class FirstFragment extends Fragment {
     private FirstViewModel mViewModel;
     private ImageView imageView;
     private List<Doctor> doctorList = new ArrayList<>();
+    private ImageView mapButton;
+    private  Button toReserve, toReport;
+    private RecyclerView recyclerView;
 
 
     public static FirstFragment newInstance() {
@@ -44,7 +47,9 @@ public class FirstFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.first_fragment, container, false);
         //点击地图
-        ImageView mapButton = (ImageView)view.findViewById(R.id.map_button);
+        initView(view);
+
+        //点击进入地图功能
         mapButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -55,8 +60,7 @@ public class FirstFragment extends Fragment {
         });
 
         //点击预约挂号
-        Button button = (Button)view.findViewById(R.id.reserve);
-        button.setOnClickListener(new View.OnClickListener() {
+        toReserve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
@@ -65,9 +69,18 @@ public class FirstFragment extends Fragment {
             }
         });
 
+        //查看检查结果
+        toReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), ReportActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
+
         //医生推荐recyclerView
         initDoctor();
-        RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.doctor_recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         DoctorAdapter adapter = new DoctorAdapter(doctorList);
@@ -98,6 +111,13 @@ public class FirstFragment extends Fragment {
             Doctor doctor3 = new Doctor("王五", "耳鼻咽喉科","眼科","医师");
             doctorList.add(doctor3);
         }
+    }
+
+    public void initView(View view){
+       mapButton = (ImageView)view.findViewById(R.id.map_button);
+       toReserve = (Button)view.findViewById(R.id.reserve);
+       recyclerView = (RecyclerView)view.findViewById(R.id.doctor_recycler_view);
+       toReport = (Button)view.findViewById(R.id.bt_report);
     }
 
 }

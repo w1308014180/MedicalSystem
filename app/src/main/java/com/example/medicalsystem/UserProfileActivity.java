@@ -58,7 +58,7 @@ public class UserProfileActivity extends AppCompatActivity {
         String gender = spfRecord.getString("gender", "");
         String school = spfRecord.getString("school", "");
         String birthDayTime = spfRecord.getString("birth_day_time", "");
-        String sign = spfRecord.getString("sign", "");
+
         String image64 = spfRecord.getString("image_64", "");
 
         String age = getAgeByBirthDay(birthDayTime);

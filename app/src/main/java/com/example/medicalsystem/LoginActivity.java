@@ -18,6 +18,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.textclassifier.TextLinks;
+import android.view.textclassifier.TextSelection;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -25,15 +27,23 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 
+import com.example.medicalsystem.Bean.LoginMessage;
 import com.example.medicalsystem.Bean.User;
 import com.example.medicalsystem.DataBase.UserDatabase;
 import com.example.medicalsystem.DatabaseHelper.UserDatabaseHelper;
 
 import com.example.medicalsystem.Service.UserService;
+import com.google.gson.Gson;
 import com.hjq.toast.ToastUtils;
 import com.hjq.toast.style.WhiteToastStyle;
 
+import org.json.JSONArray;
+
 import java.util.List;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -41,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button buttonLogin, register;
     private EditText loginAccount, loginPassword;
     private CheckBox cbRemember, cbAutoLogin;
+    private String account, password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
         //初始化控件
         initView();
 
-        //跳转登录页
+        //跳转注册页
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,26 +75,16 @@ public class LoginActivity extends AppCompatActivity {
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String account = loginAccount.getText().toString().trim();
-                String password = loginPassword.getText().toString().trim();
+                account = loginAccount.getText().toString().trim();
+                password = loginPassword.getText().toString().trim();
                 //吐司
                 ToastUtils.init(getApplication());
+                ToastUtils.setStyle(new WhiteToastStyle());
 
                 Log.d(TAG, "onClick: -------------" + account);
 
-                Log.i("TAG",account+"_"+password);
-                UserService uService=new UserService(LoginActivity.this);
-                boolean flag=uService.login(account, password);
-
-                if(flag){
-                    Log.i("TAG","登录成功");
-                    Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
-                    startActivity(intent);
-                }else{
-                    Log.i("TAG","登录失败");
-                    Toast.makeText(LoginActivity.this, "登录失败", Toast.LENGTH_LONG).show();
-                }
+                //访问服务器注册是否成功
+                sendRequestWithOkHttp();
 
 
             }
@@ -126,5 +127,37 @@ public class LoginActivity extends AppCompatActivity {
         startActivityForResult(intent, REQUEST_CODE_REGISTER);
     }
 
+    private void sendRequestWithOkHttp(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    OkHttpClient client = new OkHttpClient();
+                    Request request = new Request.Builder()
+                            //访问服务器
+                            .url("http://81.71.137.16:8000/api/v2/user/login?username="+account+"&password="+password)
+                            .build();
+                    Response response = client.newCall(request).execute();
+                    String responseData = response.body().string();
+                    parseJSONWithJSONObject(responseData);
+                }catch (Exception e){
+
+                }
+            }
+        }).start();
+    }
+
+    private void parseJSONWithJSONObject(String jsonData){
+            Gson gson = new Gson();
+            LoginMessage loginMessage = gson.fromJson(jsonData,LoginMessage.class);
+            if(TextUtils.equals(loginMessage.getCode(),"200")){
+                ToastUtils.show("登录成功");
+                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                intent.putExtra("account", account);
+                startActivity(intent);
+            }else{
+                ToastUtils.show("登录失败（账号或密码错误）");
+            }
+    }
 
 }

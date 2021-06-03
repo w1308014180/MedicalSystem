@@ -22,4 +22,13 @@
         <item name="android:layout_height">50dp</item>
     </style>
 
+    <style name="Theme.MedicalSystem.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.MedicalSystem.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.MedicalSystem.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 </resources>

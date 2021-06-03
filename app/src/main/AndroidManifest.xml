@@ -2,8 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.medicalsystem">
     <!-- if you want to load images from the internet -->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
 
-    <uses-feature android:name="android.hardware.camera" android:required="true" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -29,18 +31,31 @@
         android:theme="@style/Theme.MedicalSystem">
 
         <activity
+            android:name=".ReportActivity"
+            android:label="@string/title_activity_report"
+            android:theme="@style/Theme.MedicalSystem.NoActionBar"></activity>
+
+
+        <activity
             android:name=".UserProfileActivity"
-            android:label="个人资料"
-           ></activity>
+            android:label="个人资料" />
+        <activity
+            android:name=".EditProfileActivity"
+            android:label="修改资料" />
 
-        <activity android:name=".EditProfileActivity"
-            android:label="修改资料"></activity>
+        <!-- 注册 -->
+        <activity
+            android:name=".RegisterActivity"
+            android:label="注册"></activity>
 
-        <activity android:name=".RegisterActivity"
-            android:label="注册">
-        </activity>
+        <!-- 登录 -->
+        <activity android:name=".LoginActivity"
+            android:label="登录">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-        <activity android:name=".LoginActivity">
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <activity
@@ -49,22 +64,21 @@
 
         <activity
             android:name=".ReservationActivity"
-            android:label="挂号预约" /> <!-- 百度地图Ak -->
+            android:label="挂号预约" />
 
+        <!-- 百度地图Ak -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="8K8gAiRuTKtc6HT48hTLtS2WL0g27Ad1" />
 
+        <!--地图-->
         <activity
             android:name=".MapActivity"
             android:label="导航" />
 
+        <!--Main-->
         <activity android:name=".MainActivity">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter></activity>
+        </activity>
 
         <!-- 百度定位服务 -->
         <service
@@ -72,18 +86,16 @@
             android:enabled="true"
             android:process=":remote" />
 
-        <!-- 照相-->
+        <!-- 照相 -->
         <provider
-            android:authorities="com.example.medicalsystem.fileprovider"
             android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.medicalsystem.fileprovider"
             android:exported="false"
-            android:grantUriPermissions="true"
-            >
+            android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/files" />
         </provider>
-
     </application>
 
 </manifest>
