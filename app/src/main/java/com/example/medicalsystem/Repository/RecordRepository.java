@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import androidx.lifecycle.LiveData;
 import androidx.room.Database;
 
+
 import com.example.medicalsystem.Bean.Record;
 import com.example.medicalsystem.Dao.RecordDao;
 import com.example.medicalsystem.DataBase.RecordDatabase;
@@ -38,6 +39,10 @@ public class RecordRepository {
 
     public void deleteRecord(Record... records){
         new RecordRepository.DeleteAsyncTask(recordDao).execute(records);
+    }
+
+    public void deleteAllRecords(Record... records){
+        new RecordRepository.DeleteAllAsyncTask(recordDao).execute();
     }
 
 
@@ -81,6 +86,20 @@ public class RecordRepository {
         @Override
         protected Void doInBackground(Record... records) {
             recordDao.deleteRecord(records);
+            return null;
+        }
+    }
+
+    static class DeleteAllAsyncTask extends AsyncTask<Void, Void , Void>{
+        private RecordDao recordDao;
+
+        public DeleteAllAsyncTask(RecordDao recordDao) {
+            this.recordDao = recordDao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            recordDao.deleteAllRecords();
             return null;
         }
     }

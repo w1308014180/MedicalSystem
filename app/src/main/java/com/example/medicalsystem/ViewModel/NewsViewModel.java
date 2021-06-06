@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.medicalsystem.Bean.News;
+import com.example.medicalsystem.Bean.Result;
 import com.example.medicalsystem.Dao.NewsDao;
 import com.example.medicalsystem.Repository.NewsRepository;
 
@@ -37,5 +38,7 @@ public class NewsViewModel extends AndroidViewModel {
         newsRepository.deleteNews(news);
     }
 
-
+    public void deleteAllNews(News... news){
+        newsRepository.deleteAllNews();
+    }
 }

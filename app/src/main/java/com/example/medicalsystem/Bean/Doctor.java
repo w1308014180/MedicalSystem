@@ -14,13 +14,16 @@ public class Doctor {
     public int SubjectId;
     public String SubjectName;
 
+    public int DoctorImageLoc;
+
     public int sex;
 
-    public Doctor(String DoctorName, String DepartmentName , String SubjectName, String JobTitle){
+    public Doctor(String DoctorName, String DepartmentName , String SubjectName, String JobTitle,int DoctorImageLoc){
         this.DoctorName = DoctorName;
         this.DepartmentName = DepartmentName;
         this.SubjectName = SubjectName;
         this.JobTile = JobTitle;
+        this.DoctorImageLoc = DoctorImageLoc;
     }
 
     public String getDoctorName() {
@@ -53,5 +56,61 @@ public class Doctor {
 
     public void setJobTile(String jobTile) {
         JobTile = jobTile;
+    }
+
+    public int getDoctorId() {
+        return DoctorId;
+    }
+
+    public void setDoctorId(int doctorId) {
+        DoctorId = doctorId;
+    }
+
+    public int getDoctorAge() {
+        return DoctorAge;
+    }
+
+    public void setDoctorAge(int doctorAge) {
+        DoctorAge = doctorAge;
+    }
+
+    public int getJobTileId() {
+        return JobTileId;
+    }
+
+    public void setJobTileId(int jobTileId) {
+        JobTileId = jobTileId;
+    }
+
+    public int getDepartmentId() {
+        return DepartmentId;
+    }
+
+    public void setDepartmentId(int departmentId) {
+        DepartmentId = departmentId;
+    }
+
+    public int getSubjectId() {
+        return SubjectId;
+    }
+
+    public void setSubjectId(int subjectId) {
+        SubjectId = subjectId;
+    }
+
+    public int getDoctorImageLoc() {
+        return DoctorImageLoc;
+    }
+
+    public void setDoctorImageLoc(int doctorImageLoc) {
+        DoctorImageLoc = doctorImageLoc;
+    }
+
+    public int getSex() {
+        return sex;
+    }
+
+    public void setSex(int sex) {
+        this.sex = sex;
     }
 }

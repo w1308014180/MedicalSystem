@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 
 import com.example.medicalsystem.Bean.News;
 import com.example.medicalsystem.Bean.Record;
+import com.example.medicalsystem.Bean.Result;
 import com.example.medicalsystem.Repository.RecordRepository;
 
 import java.util.List;
@@ -36,5 +37,9 @@ public class RecordViewModel extends AndroidViewModel {
 
     public void deleteRecord(Record... records){
         recordRepository.deleteRecord(records);
+    }
+
+    public void deleteAllRecords(Record... records){
+        recordRepository.deleteAllRecords();
     }
 }

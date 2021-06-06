@@ -7,15 +7,22 @@
     android:background="@drawable/shadow"
     android:layout_marginTop="20dp">
     <TextView
+        android:id="@+id/zz"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="症状："
+        android:textSize="18sp"
+        android:textColor="#DF000000"/>
+    <TextView
         android:id="@+id/tv_record_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:textColor="#DF000000"
+        android:layout_below="@+id/zz"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         />
-
 
 
     <TextView

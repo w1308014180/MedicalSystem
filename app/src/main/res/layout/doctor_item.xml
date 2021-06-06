@@ -14,7 +14,7 @@
         android:background="@drawable/shadow">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/icon_image"
+            android:id="@+id/ci_suggested_doctor"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginLeft="10dp"

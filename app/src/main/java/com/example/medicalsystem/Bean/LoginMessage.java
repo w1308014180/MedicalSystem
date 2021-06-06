@@ -2,15 +2,15 @@ package com.example.medicalsystem.Bean;
 
 public class LoginMessage {
 
-    private String code;
+    private int code;
     private String msg;
-    private String data;
+    private boolean data;
 
-    public String getCode() {
+    public int getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(int code) {
         this.code = code;
     }
 
@@ -22,11 +22,11 @@ public class LoginMessage {
         this.msg = msg;
     }
 
-    public String getData() {
+    public boolean isData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(boolean data) {
         this.data = data;
     }
 }

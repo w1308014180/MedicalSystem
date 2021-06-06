@@ -22,7 +22,11 @@ public interface RecordDao {
     @Delete
     void deleteRecord(Record... records);
 
+    @Query("DELETE FROM RECORD")
+    void deleteAllRecords();
+
 
     @Query("SELECT * FROM record ORDER BY recordId DESC")
     LiveData<List<Record>> getAllRecordLive();
+
 }

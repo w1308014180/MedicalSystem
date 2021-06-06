@@ -34,16 +34,24 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.medicalsystem.Adapter.NewsAdapter;
 import com.example.medicalsystem.Bean.News;
+import com.example.medicalsystem.Bean.UserInfo;
 import com.example.medicalsystem.ViewModel.NewsViewModel;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 import static com.example.medicalsystem.R.menu.menu;
 
 public class SecondFragment extends Fragment {
 
+    private static final String TAG = "SecondFragment";
     private SecondViewModel mViewModel;
     private String username;
 
@@ -69,7 +77,8 @@ public class SecondFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         newsViewModel = ViewModelProviders.of(this).get(NewsViewModel.class);
-        NewsAdapter newsAdapter = new NewsAdapter(newsViewModel);
+        //传入当前用户名 以识别用户
+        NewsAdapter newsAdapter = new NewsAdapter(newsViewModel,username);
         recyclerView.setAdapter(newsAdapter);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -79,6 +88,7 @@ public class SecondFragment extends Fragment {
 
         //获取用户名
         getUsername();
+
 
 
         editNews.setOnClickListener(new View.OnClickListener() {
@@ -124,6 +134,7 @@ public class SecondFragment extends Fragment {
 
     }
 
+    //获取用户名
     private void getUsername(){
         //获取Login传入的用户名account
         Map<String, NavArgument> map = NavHostFragment.findNavController(this).getGraph().getArguments();
@@ -134,9 +145,6 @@ public class SecondFragment extends Fragment {
             username = accountData;
         }
     }
-
-
-
 
 
 }

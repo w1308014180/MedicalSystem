@@ -6,8 +6,8 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class Record {
-    @PrimaryKey(autoGenerate =  true)
-    public int recordId;
+
+    @PrimaryKey(autoGenerate =  true)   public int recordId;
 
     @ColumnInfo(name = "record_content")
     public String recordContent;

@@ -9,11 +9,9 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.content.ContentValues;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -28,18 +26,16 @@ import android.widget.Toast;
 
 
 import com.example.medicalsystem.Bean.LoginMessage;
-import com.example.medicalsystem.Bean.User;
-import com.example.medicalsystem.DataBase.UserDatabase;
-import com.example.medicalsystem.DatabaseHelper.UserDatabaseHelper;
 
-import com.example.medicalsystem.Service.UserService;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.hjq.toast.ToastUtils;
 import com.hjq.toast.style.WhiteToastStyle;
 
 import org.json.JSONArray;
 
 import java.util.List;
+import java.util.Objects;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -123,7 +119,6 @@ public class LoginActivity extends AppCompatActivity {
 
     public void toRegister(View view) {
         Intent intent = new Intent(this, RegisterActivity.class);
-
         startActivityForResult(intent, REQUEST_CODE_REGISTER);
     }
 
@@ -132,6 +127,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try{
+                    Log.d("Login","send---------------------");
                     OkHttpClient client = new OkHttpClient();
                     Request request = new Request.Builder()
                             //访问服务器
@@ -148,10 +144,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void parseJSONWithJSONObject(String jsonData){
+        Log.d("Login","Parse JSON-----------------");
             Gson gson = new Gson();
-            LoginMessage loginMessage = gson.fromJson(jsonData,LoginMessage.class);
-            if(TextUtils.equals(loginMessage.getCode(),"200")){
+            java.lang.reflect.Type type = new TypeToken<LoginMessage>() {}.getType();
+            LoginMessage loginMessage = gson.fromJson(jsonData,type);
+            if(Objects.equals(loginMessage.getCode(),200)){
                 ToastUtils.show("登录成功");
+                Log.d("Login","Login-----------------");
                 Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                 intent.putExtra("account", account);
                 startActivity(intent);

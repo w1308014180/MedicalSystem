@@ -3,6 +3,7 @@ package com.example.medicalsystem.Adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,8 @@ import com.example.medicalsystem.R;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.ViewHolder>{
     private List<Doctor> mDoctorList;
 
@@ -22,6 +25,8 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.ViewHolder
         TextView doctorDepartmentName;
         TextView doctorSubjectName;
         TextView doctorJobTile;
+        CircleImageView doctorImage;
+
 
         public ViewHolder(View view){
             super(view);
@@ -30,6 +35,7 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.ViewHolder
             doctorDepartmentName = (TextView)view.findViewById(R.id.doctor_department_name);
             doctorSubjectName = (TextView)view.findViewById(R.id.docotr_subject_name);
             doctorJobTile = (TextView)view.findViewById(R.id.doctor_job_title);
+            doctorImage = (CircleImageView)view.findViewById(R.id.ci_suggested_doctor);
         }
     }
 
@@ -54,6 +60,7 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.ViewHolder
         holder.doctorDepartmentName.setText(doctor.getDepartmentName());
         holder.doctorSubjectName.setText(doctor.getSubjectName());
         holder.doctorJobTile.setText(doctor.getJobTile());
+        holder.doctorImage.setImageResource(doctor.getDoctorImageLoc());
     }
 
     @Override

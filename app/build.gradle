@@ -6,12 +6,16 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
+    aaptOptions.cruncherEnabled = false;
+    aaptOptions.useNewCruncher = false;
+
     defaultConfig {
         applicationId "com.example.medicalsystem"
         minSdkVersion 23
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
+
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -59,7 +63,7 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
     implementation "io.reactivex.rxjava2:rxjava:2.0.0"
     implementation 'com.contrarywind:Android-PickerView:4.1.9'
-    compile 'com.google.code.gson:gson:2.6.2'
+    implementation 'com.google.code.gson:gson:2.6.2'
     def room_version = "2.3.0"
 
     implementation "androidx.room:room-runtime:$room_version"
@@ -76,5 +80,13 @@ dependencies {
 
     //http
     implementation 'com.squareup.okhttp3:okhttp:4.9.0'
+
+    //Glide
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+
+    //轮播图
+
+    implementation 'com.github.bingoogolapple:BGABanner-Android:3.0.1'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
 }

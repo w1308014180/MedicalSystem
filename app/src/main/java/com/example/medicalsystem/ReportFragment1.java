@@ -82,19 +82,19 @@ public class ReportFragment1 extends Fragment {
             }
         });
 
-        initData();
+        //初始化数据
+       //initData();
 
         return view;
     }
 
     private void initData(){
-        Record record1 = new Record("发烧",1,"2021.06.03 5:30",2,"张医生");
-        Record record2 = new Record("头晕",1,"2021.06.03 5:45",2,"张医生");
-        Record record3 = new Record("眼花",1,"2021.06.03 5:55",2,"张医生");
-        Record record4 = new Record("感冒",1,"2021.06.03 5:59",2,"张医生");
+        Record record1 = new Record("发烧、喉咙痛",1,"2020.12.05 14:30",2,"王三"+"医生");
+        Record record2 = new Record("视力模糊、头疼、眼胀",1,"2021.06.03 5:30",2,"李一"+"医生");
+        Record record3 = new Record("复查眼压",1,"2021.07.05 9:45",2,"李一"+"医生");
         recordViewModel.insertRecord(record1);
         recordViewModel.insertRecord(record2);
         recordViewModel.insertRecord(record3);
-        recordViewModel.insertRecord(record4);
+        //recordViewModel.deleteAllRecords(record1);
     }
 }

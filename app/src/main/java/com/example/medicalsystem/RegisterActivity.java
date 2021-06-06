@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -19,13 +20,12 @@ import android.widget.Toast;
 
 import com.example.medicalsystem.Bean.LoginMessage;
 import com.example.medicalsystem.Bean.RegisterMessage;
-import com.example.medicalsystem.Bean.User;
-import com.example.medicalsystem.DataBase.UserDatabase;
-import com.example.medicalsystem.DatabaseHelper.UserDatabaseHelper;
-import com.example.medicalsystem.Service.UserService;
+
 import com.google.gson.Gson;
 import com.hjq.toast.ToastUtils;
 import com.hjq.toast.style.WhiteToastStyle;
+
+import java.util.Objects;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -33,7 +33,7 @@ import okhttp3.Response;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private Button registerButton;
+    private Button registerButton, toLogin;
     private EditText registerAccount, registerPassword, registerPasswordConfirm;
     private CheckBox rgAgree;
     String username,password,passwordConfirm;
@@ -94,6 +94,14 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        toLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     public void initView(){
@@ -102,6 +110,7 @@ public class RegisterActivity extends AppCompatActivity {
         registerPassword = (EditText) findViewById(R.id.register_password);
         registerPasswordConfirm = (EditText) findViewById(R.id.register_password_confirm);
         rgAgree = (CheckBox) findViewById(R.id.cb_agree);
+        toLogin = (Button)findViewById(R.id.bt_to_login);
     }
 
     private void sendRequestWithOkHttp(){
@@ -127,10 +136,10 @@ public class RegisterActivity extends AppCompatActivity {
     private void parseJSONWithGSON(String jsonData){
         Gson gson = new Gson();
         RegisterMessage registerMessage = gson.fromJson(jsonData, RegisterMessage.class);
-        Log.d("Register:code",registerMessage.getCode());
+        Log.d("Register:code","registerMessage.getCode()");
         Log.d("Register:msg",registerMessage.getMsg());
         Log.d("Register:data",registerMessage.getData());
-        if(TextUtils.equals(registerMessage.getCode(),"200")){
+        if(Objects.equals(registerMessage.getCode(),200)){
             ToastUtils.show("注册成功");
         }else{
             ToastUtils.show("已有该账号注册失败");

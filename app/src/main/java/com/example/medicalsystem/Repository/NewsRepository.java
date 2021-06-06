@@ -39,6 +39,10 @@ public class NewsRepository {
         new DeleteAsyncTask(newsDao).execute(news);
     }
 
+    public void deleteAllNews(News... news){
+        new DeleteAllAsyncTask(newsDao).execute();
+    }
+
 
 
     //第2、3参数用于报告进度 报告结果
@@ -80,6 +84,20 @@ public class NewsRepository {
         @Override
         protected Void doInBackground(News... news) {
             newsDao.deleteNews(news);
+            return null;
+        }
+    }
+
+    static class DeleteAllAsyncTask extends AsyncTask<Void, Void , Void>{
+        private NewsDao newsDao;
+
+        public DeleteAllAsyncTask(NewsDao newsDao) {
+            this.newsDao = newsDao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            newsDao.deleteAllNews();
             return null;
         }
     }

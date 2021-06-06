@@ -49,12 +49,30 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <ImageView
+       <!-- <ImageView
             android:layout_width="400dp"
             android:layout_height="216dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/pic1"
             android:layout_gravity="center" />
+        -->
+
+        <!-- BgaBanner轮播图 -->
+        <cn.bingoogolapple.bgabanner.BGABanner
+            android:id="@+id/banner_guide_content"
+            android:layout_width="match_parent"
+            android:layout_height="216dp"
+            app:banner_pageChangeDuration="1000"
+            app:banner_pointAutoPlayAble="true"
+            app:banner_pointContainerBackground="@android:color/transparent"
+            app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow"
+            app:banner_pointTopBottomMargin="15dp"
+            app:banner_transitionEffect="alpha"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            style="@style/BannerDefaultStyle"/>
+
 
 
 

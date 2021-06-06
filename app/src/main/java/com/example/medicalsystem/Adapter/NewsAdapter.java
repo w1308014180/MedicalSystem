@@ -2,6 +2,8 @@ package com.example.medicalsystem.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,13 +25,17 @@ import com.example.medicalsystem.ViewModel.NewsViewModel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Objects;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder> {
+    private static final String TAG = "NewsAdapter";
     List<News> allNews = new ArrayList<>();
     NewsViewModel newsViewModel;
+    String username;
 
-    public NewsAdapter(NewsViewModel newsViewModel) {
+    public NewsAdapter(NewsViewModel newsViewModel,String username) {
         this.newsViewModel = newsViewModel;
+        this.username = username;
     }
 
     public void setAllNews(List<News>allNews){
@@ -56,8 +62,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         int deleteId = news.getId();
         holder.newsTime.setText(news.getTime());
 
-        //用户可以删除自己编写的news
-        if(news.getSourceId()!=1){
+        Log.d(TAG,"show list-----------");
+        Log.d(TAG,"get"+news.getSource());
+        Log.d(TAG,"get"+username);
+        //若为当前用户则删除按钮可见
+        if(TextUtils.equals(news.getSource(),username)){
             holder.newsDelete.setVisibility(View.GONE);
         }else{
             holder.newsDelete.setVisibility(View.VISIBLE);
