@@ -44,6 +44,7 @@ import com.contrarywind.listener.OnItemSelectedListener;
 import com.contrarywind.view.WheelView;
 import com.example.medicalsystem.Adapter.SpinnerAdapter;
 import com.example.medicalsystem.Bean.Json;
+import com.example.medicalsystem.Bean.LoginMessage;
 import com.example.medicalsystem.Util.GetJsonDataUtil;
 
 import org.json.JSONArray;
@@ -53,9 +54,16 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.hjq.toast.ToastUtils;
 import com.hjq.toast.style.WhiteToastStyle;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 
 public class ReservationActivity extends AppCompatActivity {
@@ -101,7 +109,7 @@ public class ReservationActivity extends AppCompatActivity {
         btnSearchDoctor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+
             }
         });
 
@@ -303,6 +311,45 @@ public class ReservationActivity extends AppCompatActivity {
                 break;
         }
         return true;
+    }
+
+    //请求后台
+    private void sendRequestWithOkHttp(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    Log.d(TAG,"sendRequestWithOkHttp---------------------");
+                    OkHttpClient client = new OkHttpClient();
+                    Request request = new Request.Builder()
+                            //访问服务器
+                            .url("http://81.71.137.16:8000/api/v2/doctor/search?department="+"内科"+"&subject="
+                                    + "高血压内分泌科"+"&index="
+                                    +spinnerPosition)
+                            .build();
+                    Response response = client.newCall(request).execute();
+                    String responseData = response.body().string();
+                    parseJSONWithJSONObject(responseData);
+                }catch (Exception e){
+
+                }
+            }
+        }).start();
+    }
+
+    //解析json
+    private void parseJSONWithJSONObject(String jsonData){
+        Log.d("Login","Parse JSON-----------------");
+        Gson gson = new Gson();
+        java.lang.reflect.Type type = new TypeToken<LoginMessage>() {}.getType();
+        LoginMessage loginMessage = gson.fromJson(jsonData,type);
+        if(Objects.equals(loginMessage.getCode(),200)){
+            ToastUtils.show("登录成功");
+            Log.d("Login","Login-----------------");
+
+        }else{
+            ToastUtils.show("登录失败（账号或密码错误）");
+        }
     }
 
 }
