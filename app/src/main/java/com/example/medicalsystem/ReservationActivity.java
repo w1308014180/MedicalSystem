@@ -4,6 +4,7 @@ package com.example.medicalsystem;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
+import android.database.DataSetObserver;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,12 +16,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +42,7 @@ import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.contrarywind.listener.OnItemSelectedListener;
 import com.contrarywind.view.WheelView;
+import com.example.medicalsystem.Adapter.SpinnerAdapter;
 import com.example.medicalsystem.Bean.Json;
 import com.example.medicalsystem.Util.GetJsonDataUtil;
 
@@ -50,17 +54,27 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import com.google.gson.Gson;
+import com.hjq.toast.ToastUtils;
+import com.hjq.toast.style.WhiteToastStyle;
 
 
-public class ReservationActivity extends AppCompatActivity implements View.OnClickListener {
+public class ReservationActivity extends AppCompatActivity {
 
+    private static final String TAG = "ReservationActivity";
     private List<Json> options1Items = new ArrayList<>();
     private ArrayList<ArrayList<String>> options2Items = new ArrayList<>();
-    private ArrayList<ArrayList<ArrayList<String>>> options3Items = new ArrayList<>();
+    //private ArrayList<ArrayList<ArrayList<String>>> options3Items = new ArrayList<>();
     private Thread thread;
     private static final int MSG_LOAD_DATA = 0x0001;
     private static final int MSG_LOAD_SUCCESS = 0x0002;
     private static final int MSG_LOAD_FAILED = 0x0003;
+    private Button btnShowSubject,btnSearchDoctor;
+    private TextView tvTime;
+    private Calendar c;
+    private Spinner spinner;
+    private String[] dateToSelect;
+    private int spinnerPosition;
+
 
     private static boolean isLoaded = false;
 
@@ -70,15 +84,78 @@ public class ReservationActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.reservation_layout);
         //启动返回按钮
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        //吐司
+        ToastUtils.init(getApplication());
+        ToastUtils.setStyle(new WhiteToastStyle());
+        //初始化控件和Spinner
         initView();
+        //解析数据
+        mHandler.sendEmptyMessage(MSG_LOAD_DATA);
+        btnShowSubject.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPickerView();
+            }
+        });
+
+        btnSearchDoctor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
+            }
+        });
+
+
+
     }
 
 
+    //初始化控件和spinner
     private void initView() {
-        findViewById(R.id.btn_data).setOnClickListener(this);
-        findViewById(R.id.btn_show).setOnClickListener(this);
+        btnShowSubject = (Button) findViewById(R.id.btn_showSubject);
+        btnSearchDoctor = (Button)findViewById(R.id.btn_search_doctor);
+        tvTime = (TextView)findViewById(R.id.tv_time);
+
+        //获取日期
+        SimpleDateFormat formatter =  new SimpleDateFormat("MM月dd日");
+        Date curDate0 =  new Date(System.currentTimeMillis());
+        Date curDate1 =  new Date(System.currentTimeMillis()+86400000);
+        Date curDate2 =  new Date(System.currentTimeMillis()+86400000*2);
+        Date curDate3 =  new Date(System.currentTimeMillis()+86400000*3);
+        Date curDate4 =  new Date(System.currentTimeMillis()+86400000*4);
+        Date curDate5 =  new Date(System.currentTimeMillis()+86400000*5);
+        Date curDate6 =  new Date(System.currentTimeMillis()+86400000*6);
+        String day0 = formatter.format(curDate0);
+        String day1 = formatter.format(curDate1);
+        String day2 = formatter.format(curDate2);
+        String day3 = formatter.format(curDate3);
+        String day4 = formatter.format(curDate4);
+        String day5 = formatter.format(curDate5);
+        String day6 = formatter.format(curDate6);
+        dateToSelect = new String[]{day0, day1, day2, day2, day3, day4, day5, day6};
+        //控件初始化
+        spinner = (Spinner) findViewById(R.id.spinner);
+        //自定义适配器，将其设置给spinner
+        spinner.setAdapter(new SpinnerAdapter(dateToSelect,this));
+        //设置监听
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            //当item被选择后调用此方法
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //获取所选中的内容
+                String s = dateToSelect[position];
+                spinnerPosition = position;
+                //弹一个吐司提示所选中的内容
+                ToastUtils.show("你选择了"+position);
+            }
+            //只有当patent中的资源没有时，调用此方法
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
+
 
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
@@ -117,7 +194,7 @@ public class ReservationActivity extends AppCompatActivity implements View.OnCli
          * 关键逻辑在于循环体
          *
          * */
-        String JsonData = new GetJsonDataUtil().getJson(this, "province.json");//获取assets目录下的json文件数据
+        String JsonData = new GetJsonDataUtil().getJson(this, "department.json");//获取assets目录下的json文件数据
 
         ArrayList<Json> jsonBean = parseData(JsonData);//用Gson 转成实体
 
@@ -127,44 +204,32 @@ public class ReservationActivity extends AppCompatActivity implements View.OnCli
          * 注意：如果是添加的JavaBean实体，则实体类需要实现 IPickerViewData 接口，
          * PickerView会通过getPickerViewText方法获取字符串显示出来。
          */
+        //添加科室
         options1Items = jsonBean;
+        int len = jsonBean.size();
+        Log.d(TAG, "jsonBean--------" + "len");
+        //遍历科室
+        for (int i = 0; i < jsonBean.size(); i++) {
+            //科室的科目列表 二级
+            ArrayList<String> subjectList = new ArrayList<>();
 
-        for (int i = 0; i < jsonBean.size(); i++) {//遍历省份
-            ArrayList<String> cityList = new ArrayList<>();//该省的城市列表（第二级）
-            ArrayList<ArrayList<String>> province_AreaList = new ArrayList<>();//该省的所有地区列表（第三极）
-
-            for (int c = 0; c < jsonBean.get(i).getCityList().size(); c++) {//遍历该省份的所有城市
-                String cityName = jsonBean.get(i).getCityList().get(c).getName();
-                cityList.add(cityName);//添加城市
-                ArrayList<String> city_AreaList = new ArrayList<>();//该城市的所有地区列表
-
-                //如果无地区数据，建议添加空字符串，防止数据为null 导致三个选项长度不匹配造成崩溃
-                /*if (jsonBean.get(i).getCityList().get(c).getArea() == null
-                        || jsonBean.get(i).getCityList().get(c).getArea().size() == 0) {
-                    city_AreaList.add("");
-                } else {
-                    city_AreaList.addAll(jsonBean.get(i).getCityList().get(c).getArea());
-                }*/
-                city_AreaList.addAll(jsonBean.get(i).getCityList().get(c).getArea());
-                province_AreaList.add(city_AreaList);//添加该省所有地区数据
+            //遍历该科室的所有科目
+            for (int c = 0; c < jsonBean.get(i).getSubjectList().size(); c++) {
+                String subjectName = jsonBean.get(i).getSubjectList().get(c).getName();
+                //添加科目
+                subjectList.add(subjectName);
             }
 
-            /**
-             * 添加城市数据
-             */
-            options2Items.add(cityList);
-
-            /**
-             * 添加地区数据
-             */
-            options3Items.add(province_AreaList);
+           //添加科目数据
+            options2Items.add(subjectList);
         }
 
         mHandler.sendEmptyMessage(MSG_LOAD_SUCCESS);
 
     }
 
-    public ArrayList<Json> parseData(String result) {//Gson 解析
+    //Gson 解析
+    public ArrayList<Json> parseData(String result) {
         ArrayList<Json> detail = new ArrayList<>();
         try {
             JSONArray data = new JSONArray(result);
@@ -180,7 +245,8 @@ public class ReservationActivity extends AppCompatActivity implements View.OnCli
         return detail;
     }
 
-    private void showPickerView() {// 弹出选择器
+    // 弹出选择器
+    private void showPickerView() {
 
         OptionsPickerView pvOptions = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
             @Override
@@ -193,25 +259,29 @@ public class ReservationActivity extends AppCompatActivity implements View.OnCli
                         && options2Items.get(options1).size() > 0 ?
                         options2Items.get(options1).get(options2) : "";
 
-                String opt3tx = options2Items.size() > 0
+                //三级
+                /*String opt3tx = options2Items.size() > 0
                         && options3Items.get(options1).size() > 0
                         && options3Items.get(options1).get(options2).size() > 0 ?
                         options3Items.get(options1).get(options2).get(options3) : "";
 
-                String tx = opt1tx + opt2tx + opt3tx;
+                 */
+                //String tx = opt1tx + opt2tx +opt3tx;
+                String tx = opt1tx + opt2tx;
+                btnShowSubject.setText(opt1tx+" "+opt2tx);
                 Toast.makeText(ReservationActivity.this, tx, Toast.LENGTH_SHORT).show();
             }
         })
 
-                .setTitleText("城市选择")
+                .setTitleText("诊疗科目选择")
                 .setDividerColor(Color.BLACK)
                 .setTextColorCenter(Color.BLACK) //设置选中项文字颜色
                 .setContentTextSize(20)
                 .build();
 
-        /*pvOptions.setPicker(options1Items);//一级选择器
-        pvOptions.setPicker(options1Items, options2Items);//二级选择器*/
-        pvOptions.setPicker(options1Items, options2Items, options3Items);//三级选择器
+        /*pvOptions.setPicker(options1Items);//一级选择器*/
+        pvOptions.setPicker(options1Items, options2Items);//二级选择器
+        //pvOptions.setPicker(options1Items, options2Items, options3Items);//三级选择器
         pvOptions.show();
     }
 
@@ -223,21 +293,6 @@ public class ReservationActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.btn_data:
-                mHandler.sendEmptyMessage(MSG_LOAD_DATA);
-                break;
-            case R.id.btn_show:
-                if (isLoaded) {
-                    showPickerView();
-                } else {
-                    Toast.makeText(ReservationActivity.this, "Please waiting until the data is parsed", Toast.LENGTH_SHORT).show();
-                }
-                break;
-        }
-    }
 
     //监听返回事件
     @Override
@@ -249,4 +304,5 @@ public class ReservationActivity extends AppCompatActivity implements View.OnCli
         }
         return true;
     }
+
 }

@@ -54,18 +54,21 @@
         <activity
             android:name=".LoginActivity"
             android:label="登录">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".EditNewsActivity"
             android:label="编辑你的分享" />
         <activity
             android:name=".ReservationActivity"
-            android:label="挂号预约" /> <!-- 百度地图Ak -->
+            android:label="挂号预约">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!-- 百度地图Ak -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="8K8gAiRuTKtc6HT48hTLtS2WL0g27Ad1" /> <!-- 地图 -->

@@ -4,6 +4,8 @@ import com.contrarywind.interfaces.IPickerViewData;
 
 import java.util.List;
 
+import javax.security.auth.Subject;
+
 public class Json implements IPickerViewData {
 
     /**
@@ -11,7 +13,7 @@ public class Json implements IPickerViewData {
      * city : [{"name":"北京市","area":["东城区","西城区","崇文区","宣武区","朝阳区"]}]
      */
     private String name;
-    private List<CityBean> city;
+    private List<SubjectBean> subject;
 
     public String getName() {
         return name;
@@ -21,13 +23,13 @@ public class Json implements IPickerViewData {
         this.name = name;
     }
 
-    public List<CityBean> getCityList() {
-        return city;
+    public List<SubjectBean> getSubjectList() {
+        return subject;
     }
 
-    public void setCityList(List<CityBean> city) {
-        this.city = city;
-    }
+   /* public void setCityList(List<SubjectBean> subject) {
+        this.subject = subject;
+    }*/
 
     // 实现 IPickerViewData 接口，
     // 这个用来显示在PickerView上面的字符串，
@@ -37,13 +39,13 @@ public class Json implements IPickerViewData {
         return this.name;
     }
 
-    public static class CityBean {
+    public static class SubjectBean {
         /**
          * name : 城市
          * area : ["东城区","西城区","崇文区","昌平区"]
          */
         private String name;
-        private List<String> area;
+        //private List<String> area;
 
         public String getName() {
             return name;
@@ -53,13 +55,13 @@ public class Json implements IPickerViewData {
             this.name = name;
         }
 
-        public List<String> getArea() {
+        /*public List<String> getArea() {
             return area;
         }
 
         public void setArea(List<String> area) {
             this.area = area;
-        }
+        }*/
     }
 }
 

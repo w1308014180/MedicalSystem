@@ -2,7 +2,7 @@
     <string name="app_name">MedicalSystem</string>
 
     <string name="picker_text_parse">解析数据</string>
-    <string name="picker_text_show">显示省市区选择器</string>
+    <string name="picker_text_show">显示诊疗科目选择器</string>
 
     <string name="picker_custom_lunar">公农历切换</string>
     <string name="picker_time">时间选择器</string>
@@ -53,6 +53,18 @@
         <item>福建</item>
         <item>海南</item>
     </string-array>
+
+    <string-array name="date">
+        <item>今天</item>
+        <item>明天</item>
+        <item>第三天</item>
+        <item>第四天</item>
+        <item>第五天</item>
+        <item>第六天</item>
+        <item>第七天</item>
+    </string-array>
+
+
     <string name="title_activity_news_content">ScrollingActivity</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
