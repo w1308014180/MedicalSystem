@@ -107,7 +107,8 @@ public class FirstFragment extends Fragment {
         //initDoctor();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        DoctorAdapter adapter = new DoctorAdapter(doctorList);
+        //0则不显示预约按钮
+        DoctorAdapter adapter = new DoctorAdapter(doctorList, 0);
         recyclerView.setAdapter(adapter);
 
         imgList = new ArrayList<>();

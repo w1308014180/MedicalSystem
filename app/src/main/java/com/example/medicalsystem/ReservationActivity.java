@@ -3,6 +3,7 @@ package com.example.medicalsystem;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.database.DataSetObserver;
 import android.graphics.Color;
@@ -83,13 +84,13 @@ public class ReservationActivity extends AppCompatActivity {
     private static final int MSG_LOAD_FAILED = 0x0003;
     private Button btnShowSubject,btnSearchDoctor;
     private TextView tvTime;
-    private Calendar c;
     private Spinner spinner;
     private String[] dateToSelect;
     private int spinnerPosition;
     private RecyclerView rvReservationDoctor;
     private List<Doctor> reservationDoctorList = new ArrayList<>();
     private String opt1tx,opt2tx;
+    private int mflag = 1;
 
 
     private static boolean isLoaded = false;
@@ -114,19 +115,21 @@ public class ReservationActivity extends AppCompatActivity {
             }
         });
 
+        Context mcontext = this;
+
         btnSearchDoctor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //获取医生列表
                 sendRequestWithOkHttp();
+                //可预约医生列表
+                LinearLayoutManager layoutManager = new LinearLayoutManager(mcontext);
+                rvReservationDoctor.setLayoutManager(layoutManager);
+                DoctorAdapter adapter = new DoctorAdapter(reservationDoctorList,1);
+                rvReservationDoctor.setAdapter(adapter);
+
             }
         });
-
-        //可预约医生列表
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        rvReservationDoctor.setLayoutManager(layoutManager);
-        DoctorAdapter adapter = new DoctorAdapter(reservationDoctorList);
-        rvReservationDoctor.setAdapter(adapter);
 
 
     }
@@ -170,6 +173,7 @@ public class ReservationActivity extends AppCompatActivity {
                 spinnerPosition = position;
                 //弹一个吐司提示所选中的内容
                 ToastUtils.show("你选择了"+position);
+                sendRequestWithOkHttp();
             }
             //只有当patent中的资源没有时，调用此方法
             @Override
