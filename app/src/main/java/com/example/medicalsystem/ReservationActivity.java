@@ -29,6 +29,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bigkoo.pickerview.adapter.ArrayWheelAdapter;
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
@@ -42,7 +44,10 @@ import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.contrarywind.listener.OnItemSelectedListener;
 import com.contrarywind.view.WheelView;
+import com.example.medicalsystem.Adapter.DoctorAdapter;
 import com.example.medicalsystem.Adapter.SpinnerAdapter;
+import com.example.medicalsystem.Bean.Doctor;
+import com.example.medicalsystem.Bean.DoctorSchedule;
 import com.example.medicalsystem.Bean.Json;
 import com.example.medicalsystem.Bean.LoginMessage;
 import com.example.medicalsystem.Util.GetJsonDataUtil;
@@ -82,6 +87,9 @@ public class ReservationActivity extends AppCompatActivity {
     private Spinner spinner;
     private String[] dateToSelect;
     private int spinnerPosition;
+    private RecyclerView rvReservationDoctor;
+    private List<Doctor> reservationDoctorList = new ArrayList<>();
+    private String opt1tx,opt2tx;
 
 
     private static boolean isLoaded = false;
@@ -109,10 +117,16 @@ public class ReservationActivity extends AppCompatActivity {
         btnSearchDoctor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //获取医生列表
+                sendRequestWithOkHttp();
             }
         });
 
+        //可预约医生列表
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        rvReservationDoctor.setLayoutManager(layoutManager);
+        DoctorAdapter adapter = new DoctorAdapter(reservationDoctorList);
+        rvReservationDoctor.setAdapter(adapter);
 
 
     }
@@ -123,6 +137,7 @@ public class ReservationActivity extends AppCompatActivity {
         btnShowSubject = (Button) findViewById(R.id.btn_showSubject);
         btnSearchDoctor = (Button)findViewById(R.id.btn_search_doctor);
         tvTime = (TextView)findViewById(R.id.tv_time);
+        rvReservationDoctor = (RecyclerView)findViewById(R.id.rv_reservation_doctor);
 
         //获取日期
         SimpleDateFormat formatter =  new SimpleDateFormat("MM月dd日");
@@ -197,21 +212,12 @@ public class ReservationActivity extends AppCompatActivity {
 
     private void initJsonData() {//解析数据
 
-        /**
-         * 注意：assets 目录下的Json文件仅供参考，实际使用可自行替换文件
-         * 关键逻辑在于循环体
-         *
-         * */
+
         String JsonData = new GetJsonDataUtil().getJson(this, "department.json");//获取assets目录下的json文件数据
 
         ArrayList<Json> jsonBean = parseData(JsonData);//用Gson 转成实体
 
-        /**
-         * 添加省份数据
-         *
-         * 注意：如果是添加的JavaBean实体，则实体类需要实现 IPickerViewData 接口，
-         * PickerView会通过getPickerViewText方法获取字符串显示出来。
-         */
+
         //添加科室
         options1Items = jsonBean;
         int len = jsonBean.size();
@@ -260,10 +266,10 @@ public class ReservationActivity extends AppCompatActivity {
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
                 //返回的分别是三个级别的选中位置
-                String opt1tx = options1Items.size() > 0 ?
+                opt1tx = options1Items.size() > 0 ?
                         options1Items.get(options1).getPickerViewText() : "";
 
-                String opt2tx = options2Items.size() > 0
+                opt2tx = options2Items.size() > 0
                         && options2Items.get(options1).size() > 0 ?
                         options2Items.get(options1).get(options2) : "";
 
@@ -322,9 +328,9 @@ public class ReservationActivity extends AppCompatActivity {
                     Log.d(TAG,"sendRequestWithOkHttp---------------------");
                     OkHttpClient client = new OkHttpClient();
                     Request request = new Request.Builder()
-                            //访问服务器
-                            .url("http://81.71.137.16:8000/api/v2/doctor/search?department="+"内科"+"&subject="
-                                    + "高血压内分泌科"+"&index="
+                            //访问服务器查询可预约医生列表
+                            .url("http://81.71.137.16:8000/api/v2/doctor/search?department="+opt1tx+"&subject="
+                                    +opt2tx+"&index="
                                     +spinnerPosition)
                             .build();
                     Response response = client.newCall(request).execute();
@@ -339,16 +345,23 @@ public class ReservationActivity extends AppCompatActivity {
 
     //解析json
     private void parseJSONWithJSONObject(String jsonData){
-        Log.d("Login","Parse JSON-----------------");
+        Log.d(TAG,"Parse JSON-----------------");
         Gson gson = new Gson();
-        java.lang.reflect.Type type = new TypeToken<LoginMessage>() {}.getType();
-        LoginMessage loginMessage = gson.fromJson(jsonData,type);
-        if(Objects.equals(loginMessage.getCode(),200)){
-            ToastUtils.show("登录成功");
-            Log.d("Login","Login-----------------");
+        java.lang.reflect.Type type = new TypeToken<DoctorSchedule>() {}.getType();
+        DoctorSchedule doctorSchedule = gson.fromJson(jsonData,type);
+        List<DoctorSchedule.data> doctorList = doctorSchedule.getData();
+        if(Objects.equals(doctorSchedule.getCode(),200)){
+            ToastUtils.show("查询成功");
+            Log.d(TAG,"解析成功-----------------");
+            for(DoctorSchedule.data doctor:doctorList){
+                //遍历该科目可预约医生数据data 依次插入到recyclerView列表中
+                Doctor doctorItem = new Doctor(doctor.getDoctor_name(), doctor.getDepartment_name(),doctor.getSubject_name(),doctor.getJob_title(),R.drawable.ic_baseline_emoji_emotions_24);
+                reservationDoctorList.add(doctorItem);
+                Log.d(TAG,doctor.getDoctor_name());
+            }
 
         }else{
-            ToastUtils.show("登录失败（账号或密码错误）");
+            ToastUtils.show("暂无数据");
         }
     }
 

@@ -7,6 +7,7 @@ public class DoctorSchedule {
         private String msg;
         private List<data> data;
 
+        //data类
         public class data{
             private int doctor_id;
             private String doctor_name;

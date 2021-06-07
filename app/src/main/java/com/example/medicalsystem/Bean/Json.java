@@ -8,10 +8,7 @@ import javax.security.auth.Subject;
 
 public class Json implements IPickerViewData {
 
-    /**
-     * name : 省份
-     * city : [{"name":"北京市","area":["东城区","西城区","崇文区","宣武区","朝阳区"]}]
-     */
+
     private String name;
     private List<SubjectBean> subject;
 
@@ -39,11 +36,9 @@ public class Json implements IPickerViewData {
         return this.name;
     }
 
+    //科目
     public static class SubjectBean {
-        /**
-         * name : 城市
-         * area : ["东城区","西城区","崇文区","昌平区"]
-         */
+
         private String name;
         //private List<String> area;
 

@@ -42,7 +42,7 @@ public class FirstFragment extends Fragment {
     private ImageView imageView;
     private List<Doctor> doctorList = new ArrayList<>();
     private ImageView mapButton;
-    private  Button toReserve, toReport;
+    private Button toReserve, toReport;
     private RecyclerView recyclerView;
     private BGABanner mBGABanner;
     private List<String>imgList;

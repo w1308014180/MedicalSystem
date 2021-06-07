@@ -26,6 +26,13 @@ public class Doctor {
         this.DoctorImageLoc = DoctorImageLoc;
     }
 
+    public Doctor(String DoctorName, String DepartmentName , String SubjectName, String JobTitle){
+        this.DoctorName = DoctorName;
+        this.DepartmentName = DepartmentName;
+        this.SubjectName = SubjectName;
+        this.JobTile = JobTitle;
+    }
+
     public String getDoctorName() {
         return DoctorName;
     }
