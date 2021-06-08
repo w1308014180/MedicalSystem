@@ -74,7 +74,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
         //按钮监听
         holder.newsDelete.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 News news = new News("健康小贴士","好医生",2,"5.24","多喝热水");
@@ -82,6 +81,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
                 newsViewModel.deleteNews(news);
             }
         });
+
 
     }
 

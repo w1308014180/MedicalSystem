@@ -123,6 +123,7 @@
             android:layout_marginLeft="10dp">
 
             <Button
+                android:id="@+id/btn_pay_bill"
                 android:layout_height="100dp"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -134,12 +135,13 @@
                 android:textColor="@color/white"/>
 
             <Button
+                android:id="@+id/btn_analyze"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="100dp"
                 android:background="@color/purple_2"
-                android:drawableLeft="@drawable/ic_vaccine"
-                android:text="疫苗预约"
+                android:drawableLeft="@drawable/ic_analyze"
+                android:text="健康分析"
                 android:textSize="18sp"
                 android:textColor="@color/white"/>
 

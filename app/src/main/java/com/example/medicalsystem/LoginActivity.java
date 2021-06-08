@@ -137,7 +137,7 @@ public class LoginActivity extends AppCompatActivity {
                     String responseData = response.body().string();
                     parseJSONWithJSONObject(responseData);
                 }catch (Exception e){
-
+                    e.printStackTrace();
                 }
             }
         }).start();

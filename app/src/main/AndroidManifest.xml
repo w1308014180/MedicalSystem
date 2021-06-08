@@ -30,14 +30,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MedicalSystem"
         android:usesCleartextTraffic="true">
-        <activity android:name=".BannerWebView3"
-            android:label="新闻咨询"></activity>
-
-        <activity android:name=".BannerWebView2"
-            android:label="新闻资讯"/>
-        <activity android:name=".BannerWebView1"
-            android:label="新闻咨询"/>
-
+        <activity android:name=".AnalyzeActivity"></activity>
+        <activity android:name=".PayActivity" />
+        <activity
+            android:name=".BannerWebView3"
+            android:label="新闻咨询" />
+        <activity
+            android:name=".BannerWebView2"
+            android:label="新闻资讯" />
+        <activity
+            android:name=".BannerWebView1"
+            android:label="新闻咨询" />
         <activity
             android:name=".ReportActivity"
             android:label="检查报告"
@@ -54,21 +57,18 @@
         <activity
             android:name=".LoginActivity"
             android:label="登录">
-
-        </activity>
-        <activity
-            android:name=".EditNewsActivity"
-            android:label="编辑你的分享" />
-        <activity
-            android:name=".ReservationActivity"
-            android:label="挂号预约">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!-- 百度地图Ak -->
+        <activity
+            android:name=".EditNewsActivity"
+            android:label="编辑你的分享" />
+        <activity
+            android:name=".ReservationActivity"
+            android:label="挂号预约" /> <!-- 百度地图Ak -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="8K8gAiRuTKtc6HT48hTLtS2WL0g27Ad1" /> <!-- 地图 -->

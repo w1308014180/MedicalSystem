@@ -42,7 +42,7 @@ public class FirstFragment extends Fragment {
     private ImageView imageView;
     private List<Doctor> doctorList = new ArrayList<>();
     private ImageView mapButton;
-    private Button toReserve, toReport;
+    private Button toReserve, toReport, btnPayBill, btnReserveBill;
     private RecyclerView recyclerView;
     private BGABanner mBGABanner;
     private List<String>imgList;
@@ -165,7 +165,8 @@ public class FirstFragment extends Fragment {
             }
         });
         //初始化医生数据
-         initDoctor();
+        initDoctor();
+
         return view;
 
     }
@@ -211,7 +212,8 @@ public class FirstFragment extends Fragment {
        recyclerView = (RecyclerView)view.findViewById(R.id.doctor_recycler_view);
        toReport = (Button)view.findViewById(R.id.bt_report);
        mBGABanner = (BGABanner)view.findViewById(R.id.banner_guide_content);
-
+       btnReserveBill = (Button)view.findViewById(R.id.btn_reserve_vaccine);
+       btnPayBill = (Button)view.findViewById(R.id.btn_pay_bill);
     }
 
 }

@@ -158,7 +158,7 @@ public class ReservationActivity extends AppCompatActivity {
         String day4 = formatter.format(curDate4);
         String day5 = formatter.format(curDate5);
         String day6 = formatter.format(curDate6);
-        dateToSelect = new String[]{day0, day1, day2, day2, day3, day4, day5, day6};
+        dateToSelect = new String[]{day0, day1, day2, day3, day4, day5, day6};
         //控件初始化
         spinner = (Spinner) findViewById(R.id.spinner);
         //自定义适配器，将其设置给spinner
@@ -363,8 +363,7 @@ public class ReservationActivity extends AppCompatActivity {
                 reservationDoctorList.add(doctorItem);
                 Log.d(TAG,doctor.getDoctor_name());
             }
-
-        }else{
+            }else{
             ToastUtils.show("暂无数据");
         }
     }
