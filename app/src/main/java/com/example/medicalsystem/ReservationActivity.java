@@ -354,7 +354,7 @@ public class ReservationActivity extends AppCompatActivity {
         java.lang.reflect.Type type = new TypeToken<DoctorSchedule>() {}.getType();
         DoctorSchedule doctorSchedule = gson.fromJson(jsonData,type);
         List<DoctorSchedule.data> doctorList = doctorSchedule.getData();
-        if(Objects.equals(doctorSchedule.getCode(),200)){
+        if(Objects.equals(doctorSchedule.getCode(),"200")){
             ToastUtils.show("查询成功");
             Log.d(TAG,"解析成功-----------------");
             for(DoctorSchedule.data doctor:doctorList){

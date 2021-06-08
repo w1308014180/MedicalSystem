@@ -42,7 +42,7 @@ public class FirstFragment extends Fragment {
     private ImageView imageView;
     private List<Doctor> doctorList = new ArrayList<>();
     private ImageView mapButton;
-    private Button toReserve, toReport, btnPayBill, btnReserveBill;
+    private Button toReserve, toReport, btnPayBill, btnAnalyze;
     private RecyclerView recyclerView;
     private BGABanner mBGABanner;
     private List<String>imgList;
@@ -100,6 +100,24 @@ public class FirstFragment extends Fragment {
                 Intent intent = new Intent();
                 intent.setClass(getActivity(), ReportActivity.class);
                 getActivity().startActivity(intent);
+            }
+        });
+
+        //缴费功能
+        btnPayBill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),PayActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //健康管理
+        btnAnalyze.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AnalyzeActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -212,7 +230,7 @@ public class FirstFragment extends Fragment {
        recyclerView = (RecyclerView)view.findViewById(R.id.doctor_recycler_view);
        toReport = (Button)view.findViewById(R.id.bt_report);
        mBGABanner = (BGABanner)view.findViewById(R.id.banner_guide_content);
-       btnReserveBill = (Button)view.findViewById(R.id.btn_reserve_vaccine);
+       btnAnalyze = (Button)view.findViewById(R.id.btn_analyze);
        btnPayBill = (Button)view.findViewById(R.id.btn_pay_bill);
     }
 

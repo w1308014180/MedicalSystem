@@ -30,30 +30,45 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MedicalSystem"
         android:usesCleartextTraffic="true">
-        <activity android:name=".AnalyzeActivity"></activity>
-        <activity android:name=".PayActivity" />
+
+        <activity android:name=".AnalyzeActivity"
+            android:label="健康管理">
+        </activity>
+
+        <activity android:name=".PayActivity"
+            android:label="支付账单">
+        </activity>
+
         <activity
             android:name=".BannerWebView3"
             android:label="新闻咨询" />
+
         <activity
             android:name=".BannerWebView2"
             android:label="新闻资讯" />
+
         <activity
             android:name=".BannerWebView1"
             android:label="新闻咨询" />
+
         <activity
             android:name=".ReportActivity"
             android:label="检查报告"
             android:theme="@style/Theme.MedicalSystem.NoActionBar" />
+
         <activity
             android:name=".UserProfileActivity"
             android:label="个人资料" />
+
         <activity
             android:name=".EditProfileActivity"
-            android:label="修改资料" /> <!-- 注册 -->
+            android:label="修改资料" />
+
+        <!-- 注册 -->
         <activity
             android:name=".RegisterActivity"
-            android:label="注册" /> <!-- 登录 -->
+            android:label="注册" />
+        <!-- 登录 -->
         <activity
             android:name=".LoginActivity"
             android:label="登录">
@@ -63,6 +78,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".EditNewsActivity"
             android:label="编辑你的分享" />

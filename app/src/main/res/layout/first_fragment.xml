@@ -141,7 +141,7 @@
                 android:layout_height="100dp"
                 android:background="@color/purple_2"
                 android:drawableLeft="@drawable/ic_analyze"
-                android:text="健康分析"
+                android:text="健康管理"
                 android:textSize="18sp"
                 android:textColor="@color/white"/>
 

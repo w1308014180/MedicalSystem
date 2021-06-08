@@ -1,15 +1,15 @@
 package com.example.medicalsystem.Bean;
 
 public class Reservation {
-    private int code;
+    private String code;
     private String msg;
     private int data;
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
